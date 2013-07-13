@@ -13,6 +13,7 @@
 		D25CF67D17910D5900E29422 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D25CF67B17910D5900E29422 /* Credits.rtf */; };
 		D25CF68017910D5900E29422 /* RRSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D25CF67F17910D5900E29422 /* RRSAppDelegate.m */; };
 		D25CF68317910D5900E29422 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D25CF68117910D5900E29422 /* MainMenu.xib */; };
+		D25CF68D179115F900E29422 /* RRSHexGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = D25CF68C179115F900E29422 /* RRSHexGridView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,9 @@
 		D25CF67E17910D5900E29422 /* RRSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RRSAppDelegate.h; sourceTree = "<group>"; };
 		D25CF67F17910D5900E29422 /* RRSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RRSAppDelegate.m; sourceTree = "<group>"; };
 		D25CF68217910D5900E29422 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		D25CF68A179115F900E29422 /* NSPointFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSPointFunctions.h; sourceTree = "<group>"; };
+		D25CF68B179115F900E29422 /* RRSHexGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RRSHexGridView.h; sourceTree = "<group>"; };
+		D25CF68C179115F900E29422 /* RRSHexGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RRSHexGridView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +50,7 @@
 		D25CF66017910D5900E29422 = {
 			isa = PBXGroup;
 			children = (
+				D25CF689179115F900E29422 /* RRSHexGridView */,
 				D25CF67217910D5900E29422 /* RRSHexGrid */,
 				D25CF66B17910D5900E29422 /* Frameworks */,
 				D25CF66A17910D5900E29422 /* Products */,
@@ -100,6 +105,16 @@
 				D25CF67B17910D5900E29422 /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D25CF689179115F900E29422 /* RRSHexGridView */ = {
+			isa = PBXGroup;
+			children = (
+				D25CF68A179115F900E29422 /* NSPointFunctions.h */,
+				D25CF68B179115F900E29422 /* RRSHexGridView.h */,
+				D25CF68C179115F900E29422 /* RRSHexGridView.m */,
+			);
+			path = RRSHexGridView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -169,6 +184,7 @@
 			files = (
 				D25CF67917910D5900E29422 /* main.m in Sources */,
 				D25CF68017910D5900E29422 /* RRSAppDelegate.m in Sources */,
+				D25CF68D179115F900E29422 /* RRSHexGridView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
