@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'RRSHexGrid' target in the 'RRSHexGrid' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
