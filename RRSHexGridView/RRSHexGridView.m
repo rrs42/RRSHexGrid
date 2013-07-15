@@ -235,7 +235,7 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
         
         [self prepAttributes];
         
-        [self translateOriginToPoint:NSMakePoint(2.0, 2.0)];
+        [self translateOriginToPoint:NSMakePoint(1.5, 1.5)];
     }
     return self;
 }
@@ -253,6 +253,16 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
 -(void)setDelegate:(id<RRSHexViewDelegate>)delegate
 {
     _delegate = delegate;
+
+    _delegateFlags.setupDrawingDefaults =
+        [delegate respondsToSelector:@selector(setupDrawingDefaults)];
+
+    _delegateFlags.drawDefaultCellAtRow =
+        [delegate respondsToSelector:@selector(drawDefaultCellAtRow:column:center:path:)];
+
+    _delegateFlags.drawCellAtRow =
+        [delegate respondsToSelector:@selector(drawCellAtRow:column:center:path:)];
+
     [self setNeedsDisplay:YES];
 }
 
@@ -312,8 +322,7 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
             NSBezierPath *path = [geometry hexPathWithRow:i withColumn:j];
             BOOL continueDrawing;
             
-            if( [self.delegate respondsToSelector:
-                    @selector(drawCellAtRow:column:center:path:)]) {
+            if( _delegateFlags.drawCellAtRow ) {
                 continueDrawing = [self.delegate drawCellAtRow:i
                                                         column:j
                                                         center:p
@@ -323,6 +332,8 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
             //Draw a center point
             //NSRect r = NSMakeRect(p.x, p.y, 2.0, 2.0);
             //[[NSBezierPath bezierPathWithRect:r] fill];
+
+            [path setLineWidth:1.5];
             
             [path stroke];
             

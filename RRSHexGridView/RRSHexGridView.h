@@ -46,10 +46,9 @@ typedef  NS_ENUM(NSInteger, RRSHexOrientation) {
 // RSHexViewDelegate
 
 @protocol RRSHexViewDelegate <NSObject>
-
 @optional
 
--(void)setVisual;
+-(void)setupDrawingDefaults;
 
 -(void)drawDefaultCellAtRow:(NSInteger)row
                       column:(NSInteger)col
@@ -69,7 +68,16 @@ typedef  NS_ENUM(NSInteger, RRSHexOrientation) {
     RRSHexGeometry *geometry;
     NSMutableDictionary *cellLabelAttrs;
 
+    // Delegate
     __weak id<RRSHexViewDelegate> _delegate;
+
+    struct {
+        unsigned int setupDrawingDefaults;
+        unsigned int drawDefaultCellAtRow;
+        unsigned int drawCellAtRow;
+    } _delegateFlags;
+
+
     float _gridSize;
     BOOL _isVertical;
     
