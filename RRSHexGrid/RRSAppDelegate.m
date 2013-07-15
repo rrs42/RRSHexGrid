@@ -11,12 +11,13 @@
 
 @implementation RRSAppDelegate
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+-(void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
 }
 
-- (IBAction)scaleGrid:(NSSegmentedCell *)sender
+
+-(IBAction)scaleGrid:(NSSegmentedCell *)sender
 {
     NSInteger tag = [sender selectedSegment];
 
@@ -30,4 +31,8 @@
 
 }
 
+-(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender
+{
+    return YES;
+}
 @end

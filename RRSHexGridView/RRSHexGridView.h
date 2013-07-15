@@ -26,18 +26,18 @@ typedef  NS_ENUM(NSInteger, RRSHexOrientation) {
 @property (readonly) float horizontalIncrement;
 @property (readonly) float verticalIncrement;
 
-- (id)initWithRadius:(float)radius isVertical:(BOOL)vert;
+-(id)initWithRadius:(float)radius isVertical:(BOOL)vert;
 
-- (NSPoint)centerWithRow:(NSInteger)row withColumn:(NSInteger)column;
+-(NSPoint)centerWithRow:(NSInteger)row withColumn:(NSInteger)column;
 
-- (void)hexPointsWithRow:(NSInteger)row
+-(void)hexPointsWithRow:(NSInteger)row
               withColumn:(NSInteger)column
                   points:(NSPoint *)points;
 
-- (NSBezierPath *)hexPathWithRow:(NSInteger)row
+-(NSBezierPath *)hexPathWithRow:(NSInteger)row
                       withColumn:(NSInteger)column;
 
-- (void)findCell:(NSPoint)point atRow:(NSInteger *)row
+-(void)findCell:(NSPoint)point atRow:(NSInteger *)row
         atColumn:(NSInteger *)column;
 
 @end
@@ -49,14 +49,14 @@ typedef  NS_ENUM(NSInteger, RRSHexOrientation) {
 
 @optional
 
-- (void)setVisual;
+-(void)setVisual;
 
-- (void)drawDefaultCellAtRow:(NSInteger)row
+-(void)drawDefaultCellAtRow:(NSInteger)row
                       column:(NSInteger)col
                       center:(NSPoint)c
                         path:(NSBezierPath *)path;
 
-- (BOOL)drawCellAtRow:(NSInteger)row
+-(BOOL)drawCellAtRow:(NSInteger)row
                column:(NSInteger)col
                center:(NSPoint)c
                  path:(NSBezierPath *)path;
@@ -79,6 +79,6 @@ typedef  NS_ENUM(NSInteger, RRSHexOrientation) {
 @property (assign) NSInteger rows;
 @property (assign) NSInteger columns;
 @property (assign) BOOL isVertical;
-@property (weak)   id<RRSHexViewDelegate> delegate;
+@property (weak)   IBOutlet id<RRSHexViewDelegate> delegate;
 
 @end

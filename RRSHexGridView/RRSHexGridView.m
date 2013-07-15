@@ -87,7 +87,7 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
 #pragma mark -
 #pragma mark RRSHexGeometry - init
 
-- (id)initWithRadius:(float)radius isVertical:(BOOL)vert
+-(id)initWithRadius:(float)radius isVertical:(BOOL)vert
 {
     self = [super init];
     if( self ) {
@@ -109,7 +109,7 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
     return self;
 }
 
-- (NSPoint)centerWithRow:(NSInteger)row withColumn:(NSInteger)column
+-(NSPoint)centerWithRow:(NSInteger)row withColumn:(NSInteger)column
 {
     float x, y;
     
@@ -131,7 +131,7 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
     
 }
 
-- (void)hexPointsWithRow:(NSInteger)row withColumn:(NSInteger)column points:(NSPoint *)points
+-(void)hexPointsWithRow:(NSInteger)row withColumn:(NSInteger)column points:(NSPoint *)points
 {
     NSPoint center = [self centerWithRow:row withColumn:column];
     
@@ -162,7 +162,7 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
     }
 }
 
-- (NSBezierPath *)hexPathWithRow:(NSInteger)row withColumn:(NSInteger)column
+-(NSBezierPath *)hexPathWithRow:(NSInteger)row withColumn:(NSInteger)column
 {
     NSBezierPath *path = [NSBezierPath bezierPath];
     
@@ -175,7 +175,7 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
     return path;
 }
 
-- (void)findCell:(NSPoint)point
+-(void)findCell:(NSPoint)point
            atRow:(NSInteger *)row
         atColumn:(NSInteger *)column
 {
@@ -219,7 +219,7 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
 #pragma mark -
 #pragma mark init
 
-- (id)initWithFrame:(NSRect)frameRect
+-(id)initWithFrame:(NSRect)frameRect
 {
     self = [super initWithFrame:frameRect];
     if (self) {
@@ -240,7 +240,7 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
     return self;
 }
 
-- (void)prepAttributes
+-(void)prepAttributes
 {
     cellLabelAttrs = [@{ NSFontAttributeName : [NSFont userFontOfSize:8] } mutableCopy];
 }
@@ -250,22 +250,22 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
 @synthesize rows = _rows;
 @synthesize columns = _columns;
 
-- (void)setDelegate:(id<RRSHexViewDelegate>)delegate
+-(void)setDelegate:(id<RRSHexViewDelegate>)delegate
 {
     _delegate = delegate;
     [self setNeedsDisplay:YES];
 }
 
-- (id<RRSHexViewDelegate>)delegate
+-(id<RRSHexViewDelegate>)delegate
 {
     return _delegate;
 }
 
-- (float)gridSize{
+-(float)gridSize{
     return _gridSize;
 }
 
-- (void)setGridSize:(float)gridSize
+-(void)setGridSize:(float)gridSize
 {
     _gridSize = gridSize;
     geometry = [[RRSHexGeometry alloc] initWithRadius:_gridSize
@@ -274,12 +274,12 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
     [self setNeedsDisplay:YES];
 }
 
-- (BOOL)isVertical
+-(BOOL)isVertical
 {
     return _isVertical;
 }
 
-- (void)setIsVertical:(BOOL)isVertical
+-(void)setIsVertical:(BOOL)isVertical
 {
     _isVertical = isVertical;
     geometry = [[RRSHexGeometry alloc] initWithRadius:_gridSize
@@ -291,7 +291,7 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
 #pragma mark -
 #pragma mark drawing
 
-- (void)drawRect:(NSRect)dirtyRect
+-(void)drawRect:(NSRect)dirtyRect
 {
     NSRect bounds = [self bounds];
     
@@ -342,7 +342,7 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
 
 // Use flipped coordinates for now.
 // Eventually could make this independent
-- (BOOL)isFlipped
+-(BOOL)isFlipped
 {
     return TRUE;
 }
@@ -350,7 +350,7 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
 
 #pragma mark -
 #pragma mark Event handlers
-- (void)mouseUp:(NSEvent *)theEvent
+-(void)mouseUp:(NSEvent *)theEvent
 {
     NSInteger row, column;
     NSPoint p = [theEvent locationInWindow];
