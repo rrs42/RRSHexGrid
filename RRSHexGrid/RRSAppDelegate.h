@@ -8,8 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class RRSHexGrid;
+
 @interface RRSAppDelegate : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
+@property (weak) IBOutlet RRSHexGrid *hexGridView;
+- (IBAction)scaleGrid:(NSSegmentedCell *)sender;
 
 @end

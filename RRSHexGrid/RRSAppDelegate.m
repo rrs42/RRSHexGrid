@@ -7,12 +7,27 @@
 //
 
 #import "RRSAppDelegate.h"
+#import "RRSHexGridView.h"
 
 @implementation RRSAppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
+}
+
+- (IBAction)scaleGrid:(NSSegmentedCell *)sender
+{
+    NSInteger tag = [sender selectedSegment];
+
+    switch (tag) {
+            case 0 : self.hexGridView.gridSize--;
+            break;
+
+            case 1 : self.hexGridView.gridSize++;
+            break;
+    }
+
 }
 
 @end
