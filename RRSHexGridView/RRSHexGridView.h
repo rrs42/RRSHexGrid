@@ -64,7 +64,7 @@ typedef  NS_ENUM(NSInteger, RRSHexOrientation) {
 
 
 
-@interface RRSHexGrid : NSView {
+@interface RRSHexGridView : NSView {
     RRSHexGeometry *geometry;
     NSMutableDictionary *cellLabelAttrs;
 

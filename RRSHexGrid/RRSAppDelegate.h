@@ -10,12 +10,14 @@
 
 #import "RRSHexGridView.h"
 
-@class RRSHexGrid;
+@class RRSHexGridView;
 
-@interface RRSAppDelegate : NSObject <NSApplicationDelegate,NSWindowDelegate>
+@interface RRSAppDelegate : NSObject <NSApplicationDelegate,
+                                        NSWindowDelegate,
+                                        RRSHexViewDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
-@property (weak) IBOutlet RRSHexGrid *hexGridView;
+@property (weak) IBOutlet RRSHexGridView *hexGridView;
 -(IBAction)scaleGrid:(NSSegmentedCell *)sender;
 
 -(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender;

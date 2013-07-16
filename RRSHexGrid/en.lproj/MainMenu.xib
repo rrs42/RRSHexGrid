@@ -1308,7 +1308,7 @@
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<object class="NSView" key="NSWindowView" id="439893737">
-					<reference key="NSNextResponder"/>
+					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSCustomView" id="594717641">
@@ -1318,7 +1318,7 @@
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSNextKeyView" ref="561330864"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
-							<string key="NSClassName">RRSHexGrid</string>
+							<string key="NSClassName">RRSHexGridView</string>
 						</object>
 						<object class="NSButton" id="301474187">
 							<reference key="NSNextResponder" ref="439893737"/>
@@ -1427,7 +1427,6 @@
 						</object>
 					</array>
 					<string key="NSFrameSize">{480, 360}</string>
-					<reference key="NSSuperview"/>
 					<reference key="NSNextKeyView" ref="594717641"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>

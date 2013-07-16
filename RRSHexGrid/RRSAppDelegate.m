@@ -22,10 +22,10 @@
     NSInteger tag = [sender selectedSegment];
 
     switch (tag) {
-            case 0 : self.hexGridView.gridSize--;
+            case 0 : self.hexGridView.gridSize -= 0.25;
             break;
 
-            case 1 : self.hexGridView.gridSize++;
+            case 1 : self.hexGridView.gridSize += 0.25;
             break;
     }
 
@@ -35,4 +35,11 @@
 {
     return YES;
 }
+
+-(void)setupDrawingDefaults
+{
+    [[NSColor blackColor] setFill];
+    [[NSColor whiteColor] setStroke];
+}
+
 @end

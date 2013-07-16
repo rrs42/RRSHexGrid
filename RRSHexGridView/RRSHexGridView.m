@@ -213,7 +213,7 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
 
 #pragma mark -
 #pragma mark RRSHexGrid
-@implementation RRSHexGrid
+@implementation RRSHexGridView
 
 
 #pragma mark -
@@ -242,7 +242,8 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
 
 -(void)prepAttributes
 {
-    cellLabelAttrs = [@{ NSFontAttributeName : [NSFont userFontOfSize:8] } mutableCopy];
+    cellLabelAttrs = [@{ NSFontAttributeName : [NSFont userFontOfSize:8],
+                      NSForegroundColorAttributeName : [NSColor whiteColor] } mutableCopy];
 }
 
 #pragma mark -
@@ -308,16 +309,22 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
     //NSLog(@"drawRect : bounds (%f,%f), (%f,%f)", bounds.origin.x,
     //      bounds.origin.y, bounds.size.height, bounds.size.width);
 
-    [[NSColor whiteColor] setFill];
+    if(_delegateFlags.setupDrawingDefaults) {
+        [self.delegate setupDrawingDefaults];
+    } else {
+        [[NSColor whiteColor] setFill];
+        [[NSColor blackColor] setStroke];
+    }
+
     [NSBezierPath fillRect:bounds];
-    
-    [[NSColor blackColor] set];
     
     NSBezierPath *bound_path = [NSBezierPath bezierPathWithRect:bounds];
     [bound_path stroke];
     
     for( NSInteger i = 0; i < self.rows; i++ ) {
         for( NSInteger j = 0; j < self.columns; j++) {
+
+            [NSGraphicsContext saveGraphicsState];
             NSPoint p = [geometry centerWithRow:i withColumn:j];
             NSBezierPath *path = [geometry hexPathWithRow:i withColumn:j];
             BOOL continueDrawing;
@@ -336,16 +343,15 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
             [path setLineWidth:1.5];
             
             [path stroke];
-            
-            NSString *string = [NSString stringWithFormat:@"%02ld%02ld", i, j];
 
+            NSString *string = [NSString stringWithFormat:@"%02ld%02ld", i, j];
             NSSize stringBox = [string sizeWithAttributes:cellLabelAttrs];
 
             p.x -= stringBox.width/2;
             p.y += geometry.H/4;
             
             [string drawAtPoint:p withAttributes:cellLabelAttrs];
-            
+            [NSGraphicsContext restoreGraphicsState];
         }
     }
     
