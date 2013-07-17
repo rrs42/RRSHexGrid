@@ -14,6 +14,12 @@
 -(void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
+
+    self.hexGridView.rows = 15;
+    self.hexGridView.columns = 15;
+
+    [_hexGridView setNeedsDisplay:YES];
+
 }
 
 
@@ -40,6 +46,20 @@
 {
     [[NSColor blackColor] setFill];
     [[NSColor whiteColor] setStroke];
+}
+
+-(BOOL)drawCellAtRow:(NSInteger)row column:(NSInteger)col center:(NSPoint)c path:(NSBezierPath *)path
+{
+    if( row == 2 && col == 1 ) {
+        [[NSColor grayColor] setFill];
+
+        [path fill];
+        [path stroke];
+
+        return NO;
+    }
+
+    return YES;
 }
 
 @end

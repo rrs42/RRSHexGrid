@@ -310,7 +310,7 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
     //      bounds.origin.y, bounds.size.height, bounds.size.width);
 
     if(_delegateFlags.setupDrawingDefaults) {
-        [self.delegate setupDrawingDefaults];
+        [_delegate setupDrawingDefaults];
     } else {
         [[NSColor whiteColor] setFill];
         [[NSColor blackColor] setStroke];
@@ -327,30 +327,39 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
             [NSGraphicsContext saveGraphicsState];
             NSPoint p = [geometry centerWithRow:i withColumn:j];
             NSBezierPath *path = [geometry hexPathWithRow:i withColumn:j];
-            BOOL continueDrawing;
+            BOOL continueDrawing = YES;
             
             if( _delegateFlags.drawCellAtRow ) {
-                continueDrawing = [self.delegate drawCellAtRow:i
+                [NSGraphicsContext saveGraphicsState];
+                continueDrawing = [_delegate drawCellAtRow:i
                                                         column:j
                                                         center:p
                                                           path:path];
+                [NSGraphicsContext restoreGraphicsState];
             }
-            
-            //Draw a center point
-            //NSRect r = NSMakeRect(p.x, p.y, 2.0, 2.0);
-            //[[NSBezierPath bezierPathWithRect:r] fill];
 
-            [path setLineWidth:1.5];
-            
-            [path stroke];
+            if (continueDrawing) {
+                if (_delegateFlags.drawDefaultCellAtRow) {
+                    [NSGraphicsContext saveGraphicsState];
+                    [_delegate drawDefaultCellAtRow:i
+                                                 column:j
+                                                 center:p
+                                                   path:path];
+                    [NSGraphicsContext restoreGraphicsState];
+                } else {
+                    [path setLineWidth:1.5];
+                    [path stroke];
 
-            NSString *string = [NSString stringWithFormat:@"%02ld%02ld", i, j];
-            NSSize stringBox = [string sizeWithAttributes:cellLabelAttrs];
+                    NSString *string = [NSString stringWithFormat:@"%02ld%02ld", i, j];
+                    NSSize stringBox = [string sizeWithAttributes:cellLabelAttrs];
 
-            p.x -= stringBox.width/2;
-            p.y += geometry.H/4;
-            
-            [string drawAtPoint:p withAttributes:cellLabelAttrs];
+                    p.x -= stringBox.width/2;
+                    p.y += geometry.H/4;
+                    
+                    [string drawAtPoint:p withAttributes:cellLabelAttrs];
+                }
+            }
+
             [NSGraphicsContext restoreGraphicsState];
         }
     }

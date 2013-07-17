@@ -13,6 +13,17 @@ typedef  NS_ENUM(NSInteger, RRSHexOrientation) {
     RRSHexGeometryHorizontal  =  1,
 };
 
+#pragma mark RRSHexGeometry
+/*********************************
+ RRSHexGeometry :
+   calculates the geometric properties of a given
+   size hexagon and where their centers would be in
+   a grid.
+ 
+   This class is a legacy from the Qt version of this control
+   and a future TODO is to remove it and merge this into
+   the main RRSHexView class.
+ */
 @interface RRSHexGeometry : NSObject
 {
 
@@ -43,8 +54,11 @@ typedef  NS_ENUM(NSInteger, RRSHexOrientation) {
 @end
 
 
-// RSHexViewDelegate
-
+#pragma mark RRSHexViewDelegate protocol
+/*
+ RRSHexViewDelegate :
+ Delegate class the controls behavior of the grid view.
+ */
 @protocol RRSHexViewDelegate <NSObject>
 @optional
 
@@ -63,6 +77,7 @@ typedef  NS_ENUM(NSInteger, RRSHexOrientation) {
 @end
 
 
+#pragma mark RRSHexGridView
 
 @interface RRSHexGridView : NSView {
     RRSHexGeometry *geometry;
