@@ -223,46 +223,43 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
 {
     self = [super initWithFrame:frameRect];
     if (self) {
-        //NSLog(@"Init hex grid view");
         _isVertical = TRUE;
         [self setGridSize:DEFAULT_SIZE];
 
         [self setRows:frameRect.size.height / geometry.H];
         [self setColumns:frameRect.size.width / geometry.W];
 
-        NSLog(@"frame h:%f w:%f geo h:%f w:%f", frameRect.size.height, frameRect.size.width,
-              geometry.H, geometry.W );
-        
-        [self prepAttributes];
+        [self setCellBorderColor:[NSColor blackColor]];
+        [self setCellFillColor:[NSColor whiteColor]];
+        [self setViewBgColor:[NSColor blackColor]];
+        [self setLabelColor:[NSColor blackColor]];
+
+        [self prepLabelAttributes];
         
         [self translateOriginToPoint:NSMakePoint(1.5, 1.5)];
     }
     return self;
 }
 
--(void)prepAttributes
+-(void)prepLabelAttributes
 {
     cellLabelAttrs = [@{ NSFontAttributeName : [NSFont userFontOfSize:8],
-                      NSForegroundColorAttributeName : [NSColor whiteColor] } mutableCopy];
+                      NSForegroundColorAttributeName : _labelColor } mutableCopy];
 }
 
 #pragma mark -
 #pragma mark Accessors
+
 @synthesize rows = _rows;
+
 @synthesize columns = _columns;
 
 -(void)setDelegate:(id<RRSHexViewDelegate>)delegate
 {
     _delegate = delegate;
 
-    _delegateFlags.setupDrawingDefaults =
-        [delegate respondsToSelector:@selector(setupDrawingDefaults)];
-
-    _delegateFlags.drawDefaultCellAtRow =
-        [delegate respondsToSelector:@selector(drawDefaultCellAtRow:column:center:path:)];
-
-    _delegateFlags.drawCellAtRow =
-        [delegate respondsToSelector:@selector(drawCellAtRow:column:center:path:)];
+    _delegateFlags.drawCellContentsAtRow =
+        [delegate respondsToSelector:@selector(drawCellContentsAtRow:column:center:path:)];
 
     [self setNeedsDisplay:YES];
 }
@@ -299,6 +296,23 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
     [self setNeedsDisplay:YES];
 }
 
+@synthesize cellBorderColor = _cellBorderColor;
+@synthesize cellFillColor = _cellFillColor;
+@synthesize viewBgColor = _viewBgColor;
+
+-(NSColor *)labelColor
+{
+    return _labelColor;
+}
+
+-(void)setLabelColor:(NSColor *)labelColor
+{
+    _labelColor = labelColor;
+    [self prepLabelAttributes];
+    [self setNeedsDisplay:YES];
+}
+
+
 #pragma mark -
 #pragma mark drawing
 
@@ -309,18 +323,15 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
     //NSLog(@"drawRect : bounds (%f,%f), (%f,%f)", bounds.origin.x,
     //      bounds.origin.y, bounds.size.height, bounds.size.width);
 
-    if(_delegateFlags.setupDrawingDefaults) {
-        [_delegate setupDrawingDefaults];
-    } else {
-        [[NSColor whiteColor] setFill];
-        [[NSColor blackColor] setStroke];
-    }
+    [_viewBgColor set];
 
-    [NSBezierPath fillRect:bounds];
-    
     NSBezierPath *bound_path = [NSBezierPath bezierPathWithRect:bounds];
-    [bound_path stroke];
-    
+    [bound_path fill];
+
+    [_cellBorderColor setStroke];
+    [_cellFillColor setFill];
+
+
     for( NSInteger i = 0; i < self.rows; i++ ) {
         for( NSInteger j = 0; j < self.columns; j++) {
 
@@ -328,36 +339,29 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
             NSPoint p = [geometry centerWithRow:i withColumn:j];
             NSBezierPath *path = [geometry hexPathWithRow:i withColumn:j];
             BOOL continueDrawing = YES;
-            
-            if( _delegateFlags.drawCellAtRow ) {
+
+            [path fill];
+
+            if( _delegateFlags.drawCellContentsAtRow ) {
                 [NSGraphicsContext saveGraphicsState];
-                continueDrawing = [_delegate drawCellAtRow:i
-                                                        column:j
-                                                        center:p
-                                                          path:path];
+                continueDrawing = [_delegate drawCellContentsAtRow:i
+                                                            column:j
+                                                            center:p
+                                                              path:path];
                 [NSGraphicsContext restoreGraphicsState];
             }
 
             if (continueDrawing) {
-                if (_delegateFlags.drawDefaultCellAtRow) {
-                    [NSGraphicsContext saveGraphicsState];
-                    [_delegate drawDefaultCellAtRow:i
-                                                 column:j
-                                                 center:p
-                                                   path:path];
-                    [NSGraphicsContext restoreGraphicsState];
-                } else {
-                    [path setLineWidth:1.5];
-                    [path stroke];
+                [path setLineWidth:1.5];
+                [path stroke];
 
-                    NSString *string = [NSString stringWithFormat:@"%02ld%02ld", i, j];
-                    NSSize stringBox = [string sizeWithAttributes:cellLabelAttrs];
+                NSString *string = [NSString stringWithFormat:@"%02ld%02ld", i, j];
+                NSSize stringBox = [string sizeWithAttributes:cellLabelAttrs];
 
-                    p.x -= stringBox.width/2;
-                    p.y += geometry.H/4;
-                    
-                    [string drawAtPoint:p withAttributes:cellLabelAttrs];
-                }
+                p.x -= stringBox.width/2;
+                p.y += geometry.H/4;
+
+                [string drawAtPoint:p withAttributes:cellLabelAttrs];
             }
 
             [NSGraphicsContext restoreGraphicsState];
@@ -379,7 +383,7 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
 -(void)mouseUp:(NSEvent *)theEvent
 {
     NSInteger row, column;
-    NSPoint p = [theEvent locationInWindow];
+    NSPoint p = [theEvent locationInWindow];							
     
     [geometry findCell:[self convertPoint:p fromView:nil]
                  atRow:&row
@@ -391,7 +395,5 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
         NSLog(@"Clicked cell (%ld,%ld)", row, column);
     }
 }
-
-
 
 @end

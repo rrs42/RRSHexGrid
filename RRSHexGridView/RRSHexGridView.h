@@ -62,17 +62,10 @@ typedef  NS_ENUM(NSInteger, RRSHexOrientation) {
 @protocol RRSHexViewDelegate <NSObject>
 @optional
 
--(void)setupDrawingDefaults;
-
--(void)drawDefaultCellAtRow:(NSInteger)row
+-(BOOL)drawCellContentsAtRow:(NSInteger)row
                       column:(NSInteger)col
                       center:(NSPoint)c
                         path:(NSBezierPath *)path;
-
--(BOOL)drawCellAtRow:(NSInteger)row
-               column:(NSInteger)col
-               center:(NSPoint)c
-                 path:(NSBezierPath *)path;
 
 @end
 
@@ -87,14 +80,13 @@ typedef  NS_ENUM(NSInteger, RRSHexOrientation) {
     __weak id<RRSHexViewDelegate> _delegate;
 
     struct {
-        unsigned int setupDrawingDefaults;
-        unsigned int drawDefaultCellAtRow;
-        unsigned int drawCellAtRow;
+        unsigned int drawCellContentsAtRow;
     } _delegateFlags;
 
 
     float _gridSize;
     BOOL _isVertical;
+    NSColor *_labelColor;
     
 }
 
@@ -102,6 +94,10 @@ typedef  NS_ENUM(NSInteger, RRSHexOrientation) {
 @property (assign) NSInteger rows;
 @property (assign) NSInteger columns;
 @property (assign) BOOL isVertical;
+@property (assign) NSColor *cellBorderColor;
+@property (assign) NSColor *cellFillColor;
+@property (assign) NSColor *viewBgColor;
+@property (assign) NSColor *labelColor;
 @property (weak)   IBOutlet id<RRSHexViewDelegate> delegate;
 
 @end
