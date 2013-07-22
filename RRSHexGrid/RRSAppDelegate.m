@@ -18,7 +18,7 @@
     self.hexGridView.rows = 15;
     self.hexGridView.columns = 15;
 
-    self.hexGridView.labelColor = [NSColor redColor];
+    self.hexGridView.labelColor = [NSColor blackColor];
 
     [_hexGridView setNeedsDisplay:YES];
 
@@ -45,7 +45,8 @@
 }
 
 
--(BOOL)drawCellContentsAtRow:(NSInteger)row column:(NSInteger)col center:(NSPoint)c path:(NSBezierPath *)path
+-(BOOL)hexGridView:view drawCellContentsAtRow:(NSInteger)row column:(NSInteger)col
+            center:(NSPoint)c path:(NSBezierPath *)path
 {
     if( row == 2 && col == 1 ) {
         [[NSColor grayColor] setFill];

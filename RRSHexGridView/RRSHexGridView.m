@@ -259,7 +259,7 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
     _delegate = delegate;
 
     _delegateFlags.drawCellContentsAtRow =
-        [delegate respondsToSelector:@selector(drawCellContentsAtRow:column:center:path:)];
+    [delegate respondsToSelector:@selector(hexGridView:drawCellContentsAtRow:column:center:path:)];
 
     [self setNeedsDisplay:YES];
 }
@@ -344,10 +344,11 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
 
             if( _delegateFlags.drawCellContentsAtRow ) {
                 [NSGraphicsContext saveGraphicsState];
-                continueDrawing = [_delegate drawCellContentsAtRow:i
-                                                            column:j
-                                                            center:p
-                                                              path:path];
+                continueDrawing = [_delegate hexGridView:self
+                                   drawCellContentsAtRow:i
+                                                  column:j
+                                                  center:p
+                                                    path:path];
                 [NSGraphicsContext restoreGraphicsState];
             }
 

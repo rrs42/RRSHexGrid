@@ -53,6 +53,8 @@ typedef  NS_ENUM(NSInteger, RRSHexOrientation) {
 
 @end
 
+@class RRSHexGridView;
+
 
 #pragma mark RRSHexViewDelegate protocol
 /*
@@ -62,10 +64,11 @@ typedef  NS_ENUM(NSInteger, RRSHexOrientation) {
 @protocol RRSHexViewDelegate <NSObject>
 @optional
 
--(BOOL)drawCellContentsAtRow:(NSInteger)row
-                      column:(NSInteger)col
-                      center:(NSPoint)c
-                        path:(NSBezierPath *)path;
+-(BOOL)hexGridView: (RRSHexGridView *)gridView
+drawCellContentsAtRow:(NSInteger)row
+            column:(NSInteger)col
+            center:(NSPoint)c
+              path:(NSBezierPath *)path;
 
 @end
 
