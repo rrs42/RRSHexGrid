@@ -70,6 +70,12 @@ drawCellContentsAtRow:(NSInteger)row
             center:(NSPoint)c
               path:(NSBezierPath *)path;
 
+-(void)hexGridViewClickedBorder:(RRSHexGridView *)gridView;
+
+-(void)hexGridView: (RRSHexGridView *)gridView
+  cellClickedAtRow:(NSInteger)row
+            column:(NSInteger)col;
+
 @end
 
 
@@ -83,7 +89,9 @@ drawCellContentsAtRow:(NSInteger)row
     __weak id<RRSHexViewDelegate> _delegate;
 
     struct {
-        unsigned int drawCellContentsAtRow;
+        unsigned int drawCellContentsAtRow:1;
+        unsigned int clickedBorder:1;
+        unsigned int clickedAtRowCol:1;
     } _delegateFlags;
 
 

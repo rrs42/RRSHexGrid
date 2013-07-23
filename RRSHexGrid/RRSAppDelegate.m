@@ -58,4 +58,13 @@
     return YES;
 }
 
+-(void)hexGridView:(RRSHexGridView *)gridView cellClickedAtRow:(NSInteger)row column:(NSInteger)col
+{
+    NSLog(@"Clicked at %ld, %ld", row, col);
+}
+
+-(void)hexGridViewClickedBorder:(RRSHexGridView *)gridView
+{
+    NSLog(@"Clicked border");
+}
  @end

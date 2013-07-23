@@ -261,6 +261,12 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
     _delegateFlags.drawCellContentsAtRow =
     [delegate respondsToSelector:@selector(hexGridView:drawCellContentsAtRow:column:center:path:)];
 
+    _delegateFlags.clickedBorder =
+    [delegate respondsToSelector:@selector(hexGridViewClickedBorder:)];
+
+    _delegateFlags.clickedAtRowCol =
+    [delegate respondsToSelector:@selector(hexGridView:cellClickedAtRow:column:)];
+
     [self setNeedsDisplay:YES];
 }
 
@@ -391,9 +397,13 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
               atColumn:&column];
     
     if ( row < 0 || column < 0 || row >= _rows || column >= _columns ){
-        NSLog(@"Click outside of bounds");
+        if (_delegateFlags.clickedBorder) {
+            [_delegate hexGridViewClickedBorder:self];
+        }
     } else {
-        NSLog(@"Clicked cell (%ld,%ld)", row, column);
+        if (_delegateFlags.clickedAtRowCol) {
+            [_delegate hexGridView:self cellClickedAtRow:row column:column];
+        }
     }
 }
 
