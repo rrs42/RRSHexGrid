@@ -20,6 +20,9 @@
 
     self.hexGridView.labelColor = [NSColor blackColor];
 
+    selectionActive = NO;
+    selectedRow = selectedColumn = -1;
+
     [_hexGridView setNeedsDisplay:YES];
 
 }
@@ -48,11 +51,12 @@
 -(BOOL)hexGridView:view drawCellContentsAtRow:(NSInteger)row column:(NSInteger)col
             center:(NSPoint)c path:(NSBezierPath *)path
 {
-    if( row == 2 && col == 1 ) {
-        [[NSColor grayColor] setFill];
-
-        [path fill];
-        return NO;
+    if (selectionActive) {
+        if ((row == selectedRow) && (col == selectedColumn)) {
+            [[NSColor grayColor] setFill];
+            [path fill];
+            return NO;
+        }
     }
 
     return YES;
@@ -60,11 +64,16 @@
 
 -(void)hexGridView:(RRSHexGridView *)gridView cellClickedAtRow:(NSInteger)row column:(NSInteger)col
 {
-    NSLog(@"Clicked at %ld, %ld", row, col);
+    selectionActive = YES;
+    selectedRow = row;
+    selectedColumn = col;
+    [_hexGridView setNeedsDisplay:YES];
 }
 
 -(void)hexGridViewClickedBorder:(RRSHexGridView *)gridView
 {
-    NSLog(@"Clicked border");
+    selectionActive = NO;
+    selectedRow = selectedColumn = -1;
+    [_hexGridView setNeedsDisplay:YES];
 }
  @end

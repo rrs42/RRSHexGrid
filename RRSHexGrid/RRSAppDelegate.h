@@ -15,6 +15,10 @@
 @interface RRSAppDelegate : NSObject <NSApplicationDelegate,
                                         NSWindowDelegate,
                                         RRSHexViewDelegate>
+{
+    BOOL selectionActive;
+    NSInteger selectedRow, selectedColumn;
+}
 
 @property (assign) IBOutlet NSWindow *window;
 @property (weak) IBOutlet RRSHexGridView *hexGridView;
