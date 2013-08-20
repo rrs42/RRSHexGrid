@@ -14,41 +14,67 @@ typedef  NS_ENUM(NSInteger, RRSHexOrientation) {
 };
 
 #pragma mark RRSHexGeometry
-/*********************************
- RRSHexGeometry :
-   calculates the geometric properties of a given
-   size hexagon and where their centers would be in
-   a grid.
- 
-   This class is a legacy from the Qt version of this control
-   and a future TODO is to remove it and merge this into
-   the main RRSHexView class.
+/*!
+ * Calculates the geometric properties of a given
+ * size hexagon and where their centers would be in
+ * a grid.
+ *
+ * This class is a legacy from the Qt version of this control
+ * and a future TODO is to remove it and merge this into
+ * the main RRSHexView class.
  */
 @interface RRSHexGeometry : NSObject
-{
 
-}
-
+/*! Orientation of the Hex Grid */
 @property (readonly) BOOL isVertical;
+
+/*! Cell radius */
 @property (readonly) float R;
+/*! Cell height */
 @property (readonly) float H;
+/*! Cell width */
 @property (readonly) float W;
+/*! Cell size */
 @property (readonly) float S;
+
+/*! Horizontal offset between cell centers */
 @property (readonly) float horizontalIncrement;
+/*! Vertical offset between cell centers */
 @property (readonly) float verticalIncrement;
 
--(id)initWithRadius:(float)radius isVertical:(BOOL)vert;
+/*! @methodgroup Init */
+/*!
+ * Initalize with given cell size and orientation
+ */
+- (id)initWithRadius:(float)radius isVertical:(BOOL)vert;
 
--(NSPoint)centerWithRow:(NSInteger)row withColumn:(NSInteger)column;
+/*! @methodgroup Cell Geometry */
+/*!
+ * return the center point of a given cell
+ * @return cell center point
+ * @param row Row index of target cell
+ * @param column Column index of target cell
+ */
+- (NSPoint)centerWithRow:(NSInteger)row withColumn:(NSInteger)column;
 
--(void)hexPointsWithRow:(NSInteger)row
+/*!
+ * Return the points that form the border of a target hex cell
+ */
+- (void)hexPointsWithRow:(NSInteger)row
               withColumn:(NSInteger)column
                   points:(NSPoint *)points;
 
--(NSBezierPath *)hexPathWithRow:(NSInteger)row
+/*!
+ * Return an NSBezierPath object that defines the border of a target cell
+ */
+- (NSBezierPath *)hexPathWithRow:(NSInteger)row
                       withColumn:(NSInteger)column;
 
--(void)findCell:(NSPoint)point atRow:(NSInteger *)row
+/*!
+ * Return the row and column index of the cell at the
+ * target point
+ */
+- (void)findCell:(NSPoint)point atRow:(NSInteger *)row
         atColumn:(NSInteger *)column;
 
 @end
@@ -57,30 +83,50 @@ typedef  NS_ENUM(NSInteger, RRSHexOrientation) {
 
 
 #pragma mark RRSHexViewDelegate protocol
-/*
- RRSHexViewDelegate :
- Delegate class the controls behavior of the grid view.
+/*!
+ * Delegate class the controls behavior of the grid view.
  */
 @protocol RRSHexViewDelegate <NSObject>
 @optional
 
--(BOOL)hexGridView: (RRSHexGridView *)gridView
+/*!
+ * Method the HexGridView uses to draw the contents of a hex
+ * @param gridView The specific grid view object calling
+ * @param row Draw cell at row
+ * @param column Draw cell at col
+ * @param center Center point of the cell being drawn
+ * @param path NSBezierPath object of the cell border
+ */
+- (BOOL)hexGridView:(RRSHexGridView *)gridView
 drawCellContentsAtRow:(NSInteger)row
-            column:(NSInteger)col
-            center:(NSPoint)c
+            column:(NSInteger)column
+            center:(NSPoint)center
               path:(NSBezierPath *)path;
 
--(void)hexGridViewClickedBorder:(RRSHexGridView *)gridView;
+/*!
+ * Called when the user clicks in the border area
+ * @param gridView The specific grid view object calling
+ */
+- (void)hexGridViewClickedBorder:(RRSHexGridView *)gridView;
 
--(void)hexGridView: (RRSHexGridView *)gridView
+/*!
+ * Called when the user clicks in a hex cell
+ * @param gridView The specific grid view object calling
+ * @param row The clicked cell's row
+ * @param column THe clicked cell's column
+ */
+- (void)hexGridView:(RRSHexGridView *)gridView
   cellClickedAtRow:(NSInteger)row
-            column:(NSInteger)col;
+            column:(NSInteger)column;
 
 @end
 
 
 #pragma mark RRSHexGridView
 
+/*!
+ * A grid of hexagons
+ */
 @interface RRSHexGridView : NSView {
     RRSHexGeometry *geometry;
     NSMutableDictionary *cellLabelAttrs;
@@ -101,14 +147,23 @@ drawCellContentsAtRow:(NSInteger)row
     
 }
 
+/*! size of the grid */
 @property (assign) float gridSize;
+/*! number of rows in the grid */
 @property (assign) NSInteger rows;
+/*! number of colums in the grid */
 @property (assign) NSInteger columns;
+/*! grid orientation */
 @property (assign) BOOL isVertical;
+/*! cell border color */
 @property (assign) NSColor *cellBorderColor;
+/*! cell fill color */
 @property (assign) NSColor *cellFillColor;
+/*! view background color */
 @property (assign) NSColor *viewBgColor;
+/*! cell label text color */
 @property (assign) NSColor *labelColor;
+/*! set/fetch delegate object */
 @property (weak)   IBOutlet id<RRSHexViewDelegate> delegate;
 
 @end

@@ -22,8 +22,8 @@
 
 @property (assign) IBOutlet NSWindow *window;
 @property (weak) IBOutlet RRSHexGridView *hexGridView;
--(IBAction)scaleGrid:(NSSegmentedCell *)sender;
+- (IBAction)scaleGrid:(NSSegmentedCell *)sender;
 
--(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender;
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender;
 
 @end

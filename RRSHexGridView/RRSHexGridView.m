@@ -8,8 +8,7 @@
 
 #import "RRSHexGridView.h"
 
-#pragma mark -
-#pragma mark Constants
+#pragma mark - Constants
 
 //**********************************************************
 // Useful constants for building hexagons
@@ -21,8 +20,7 @@ static const double SQRT_3      = 1.732050807568877;
 static const float DEFAULT_SIZE = 25.0;
 
 
-#pragma mark -
-#pragma mark Utility Functions
+#pragma mark - Utility Functions
 
 static inline NSPoint NSAddPoints(NSPoint firstPoint, NSPoint secondPoint)
 {
@@ -34,45 +32,7 @@ static inline NSPoint NSSubtractPoints(NSPoint firstPoint, NSPoint secondPoint)
 	return NSMakePoint(firstPoint.x-secondPoint.x, firstPoint.y-secondPoint.y);
 }
 
-
-static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
-{
-    BOOL miss;
-    
-    miss = FALSE;
-    
-    for( int j = 0; j < 6 && !miss; j++ ) {
-        NSPoint v, v1, c;
-        double norm_v, norm_v1, norm_c;
-        double dot1, dot2;
-        double angle1, angle2;
-        
-        v = NSSubtractPoints(vertex[(j+5 % 6)], vertex[j]);
-        v1 = NSSubtractPoints(vertex[(j+1 % 6)], vertex[j]);
-        c = NSSubtractPoints(point, vertex[j]);
-
-        norm_v = sqrt( pow(v.x,2) + pow(v.y,2) );
-        norm_v1 = sqrt( pow(v1.x,2) + pow(v1.y,2) );
-        norm_c = sqrt( pow(c.x,2) + pow(c.y,2) );
-
-        dot1 = (v.x * v1.x) + (v.y * v1.y);
-        dot2 = (v.x * c.x) + (v.y * c.y);
-        
-        angle1 = acos(dot1 / ( norm_v * norm_v1 ));
-        angle2 = acos(dot2 / ( norm_v * norm_c ));
-        
-        if( angle2 > angle1 ) {
-            miss = true;
-        }
-
-        
-    }
-
-    return !miss;
-}
-
-#pragma mark -
-#pragma mark RRSHexGeometry
+#pragma mark - RRSHexGeometry
 
 @implementation RRSHexGeometry
 
@@ -84,8 +44,7 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
 @synthesize horizontalIncrement = _horizontalIncrement;
 @synthesize verticalIncrement = _verticalIncrement;
 
-#pragma mark -
-#pragma mark RRSHexGeometry - init
+#pragma mark - RRSHexGeometry - init
 
 -(id)initWithRadius:(float)radius isVertical:(BOOL)vert
 {
@@ -211,12 +170,9 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
 
 @end
 
-#pragma mark -
-#pragma mark RRSHexGrid
+#pragma mark - RRSHexGrid
 @implementation RRSHexGridView
 
-
-#pragma mark -
 #pragma mark init
 
 -(id)initWithFrame:(NSRect)frameRect
@@ -247,7 +203,6 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
                       NSForegroundColorAttributeName : _labelColor } mutableCopy];
 }
 
-#pragma mark -
 #pragma mark Accessors
 
 @synthesize rows = _rows;
@@ -319,7 +274,6 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
 }
 
 
-#pragma mark -
 #pragma mark drawing
 
 -(void)drawRect:(NSRect)dirtyRect
@@ -385,7 +339,6 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
 }
 
 
-#pragma mark -
 #pragma mark Event handlers
 -(void)mouseUp:(NSEvent *)theEvent
 {
@@ -402,6 +355,7 @@ static BOOL RRSHexhitTest( NSPointArray vertex, NSPoint point )
         }
     } else {
         if (_delegateFlags.clickedAtRowCol) {
+            NSLog(@"Clicked at row:%ld, col:%ld", row, column);
             [_delegate hexGridView:self cellClickedAtRow:row column:column];
         }
     }

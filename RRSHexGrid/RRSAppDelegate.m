@@ -11,7 +11,7 @@
 
 @implementation RRSAppDelegate
 
--(void)applicationDidFinishLaunching:(NSNotification *)aNotification
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
 
@@ -28,7 +28,7 @@
 }
 
 
--(IBAction)scaleGrid:(NSSegmentedCell *)sender
+- (IBAction)scaleGrid:(NSSegmentedCell *)sender
 {
     NSInteger tag = [sender selectedSegment];
 
@@ -42,13 +42,13 @@
 
 }
 
--(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender
 {
     return YES;
 }
 
 
--(BOOL)hexGridView:view drawCellContentsAtRow:(NSInteger)row column:(NSInteger)col
+- (BOOL)hexGridView:view drawCellContentsAtRow:(NSInteger)row column:(NSInteger)col
             center:(NSPoint)c path:(NSBezierPath *)path
 {
     if (selectionActive) {
@@ -62,18 +62,25 @@
     return YES;
 }
 
--(void)hexGridView:(RRSHexGridView *)gridView cellClickedAtRow:(NSInteger)row column:(NSInteger)col
+- (void)hexGridView:(RRSHexGridView *)gridView
+   cellClickedAtRow:(NSInteger)row
+             column:(NSInteger)col
 {
+    if (selectionActive && row == selectedRow && col == selectedColumn) {
+        [self hexGridViewClickedBorder:gridView];
+        return;
+    }
     selectionActive = YES;
     selectedRow = row;
     selectedColumn = col;
     [_hexGridView setNeedsDisplay:YES];
 }
 
--(void)hexGridViewClickedBorder:(RRSHexGridView *)gridView
+- (void)hexGridViewClickedBorder:(RRSHexGridView *)gridView
 {
     selectionActive = NO;
     selectedRow = selectedColumn = -1;
     [_hexGridView setNeedsDisplay:YES];
 }
- @end
+
+@end
