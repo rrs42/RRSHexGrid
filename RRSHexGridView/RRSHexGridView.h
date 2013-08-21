@@ -1,5 +1,5 @@
 //
-//  RSHexGrid.h
+//  RRSHexGridView.h
 //  HexGrid
 //
 //  Created by Russell Steffen on 6/1/13.
@@ -7,11 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
-typedef  NS_ENUM(NSInteger, RRSHexOrientation) {
-    RRSHexGeometryVertical    = 0,
-    RRSHexGeometryHorizontal  =  1,
-};
 
 #pragma mark RRSHexGeometry
 /*!

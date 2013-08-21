@@ -1,5 +1,5 @@
 //
-//  RSHexGrid.m
+//  RRSHexGridView.m
 //  HexGrid
 //
 //  Created by Russell Steffen on 6/1/13.
@@ -46,7 +46,7 @@ static inline NSPoint NSSubtractPoints(NSPoint firstPoint, NSPoint secondPoint)
 
 #pragma mark - RRSHexGeometry - init
 
--(id)initWithRadius:(float)radius isVertical:(BOOL)vert
+- (id)initWithRadius:(float)radius isVertical:(BOOL)vert
 {
     self = [super init];
     if( self ) {
@@ -68,7 +68,7 @@ static inline NSPoint NSSubtractPoints(NSPoint firstPoint, NSPoint secondPoint)
     return self;
 }
 
--(NSPoint)centerWithRow:(NSInteger)row withColumn:(NSInteger)column
+- (NSPoint)centerWithRow:(NSInteger)row withColumn:(NSInteger)column
 {
     float x, y;
     
@@ -90,7 +90,7 @@ static inline NSPoint NSSubtractPoints(NSPoint firstPoint, NSPoint secondPoint)
     
 }
 
--(void)hexPointsWithRow:(NSInteger)row withColumn:(NSInteger)column points:(NSPoint *)points
+- (void)hexPointsWithRow:(NSInteger)row withColumn:(NSInteger)column points:(NSPoint *)points
 {
     NSPoint center = [self centerWithRow:row withColumn:column];
     
@@ -121,7 +121,7 @@ static inline NSPoint NSSubtractPoints(NSPoint firstPoint, NSPoint secondPoint)
     }
 }
 
--(NSBezierPath *)hexPathWithRow:(NSInteger)row withColumn:(NSInteger)column
+- (NSBezierPath *)hexPathWithRow:(NSInteger)row withColumn:(NSInteger)column
 {
     NSBezierPath *path = [NSBezierPath bezierPath];
     
@@ -134,9 +134,7 @@ static inline NSPoint NSSubtractPoints(NSPoint firstPoint, NSPoint secondPoint)
     return path;
 }
 
--(void)findCell:(NSPoint)point
-           atRow:(NSInteger *)row
-        atColumn:(NSInteger *)column
+- (void)findCell:(NSPoint)point atRow:(NSInteger *)row atColumn:(NSInteger *)column
 {
     NSInteger estimate_row, estimate_column;
 
@@ -175,7 +173,7 @@ static inline NSPoint NSSubtractPoints(NSPoint firstPoint, NSPoint secondPoint)
 
 #pragma mark init
 
--(id)initWithFrame:(NSRect)frameRect
+- (id)initWithFrame:(NSRect)frameRect
 {
     self = [super initWithFrame:frameRect];
     if (self) {
@@ -197,7 +195,7 @@ static inline NSPoint NSSubtractPoints(NSPoint firstPoint, NSPoint secondPoint)
     return self;
 }
 
--(void)prepLabelAttributes
+- (void)prepLabelAttributes
 {
     cellLabelAttrs = [@{ NSFontAttributeName : [NSFont userFontOfSize:8],
                       NSForegroundColorAttributeName : _labelColor } mutableCopy];
@@ -209,7 +207,7 @@ static inline NSPoint NSSubtractPoints(NSPoint firstPoint, NSPoint secondPoint)
 
 @synthesize columns = _columns;
 
--(void)setDelegate:(id<RRSHexViewDelegate>)delegate
+- (void)setDelegate:(id<RRSHexViewDelegate>)delegate
 {
     _delegate = delegate;
 
@@ -225,7 +223,7 @@ static inline NSPoint NSSubtractPoints(NSPoint firstPoint, NSPoint secondPoint)
     [self setNeedsDisplay:YES];
 }
 
--(id<RRSHexViewDelegate>)delegate
+- (id<RRSHexViewDelegate>)delegate
 {
     return _delegate;
 }
@@ -234,7 +232,7 @@ static inline NSPoint NSSubtractPoints(NSPoint firstPoint, NSPoint secondPoint)
     return _gridSize;
 }
 
--(void)setGridSize:(float)gridSize
+- (void)setGridSize:(float)gridSize
 {
     _gridSize = gridSize;
     geometry = [[RRSHexGeometry alloc] initWithRadius:_gridSize
@@ -243,12 +241,12 @@ static inline NSPoint NSSubtractPoints(NSPoint firstPoint, NSPoint secondPoint)
     [self setNeedsDisplay:YES];
 }
 
--(BOOL)isVertical
+- (BOOL)isVertical
 {
     return _isVertical;
 }
 
--(void)setIsVertical:(BOOL)isVertical
+- (void)setIsVertical:(BOOL)isVertical
 {
     _isVertical = isVertical;
     geometry = [[RRSHexGeometry alloc] initWithRadius:_gridSize
@@ -261,12 +259,12 @@ static inline NSPoint NSSubtractPoints(NSPoint firstPoint, NSPoint secondPoint)
 @synthesize cellFillColor = _cellFillColor;
 @synthesize viewBgColor = _viewBgColor;
 
--(NSColor *)labelColor
+- (NSColor *)labelColor
 {
     return _labelColor;
 }
 
--(void)setLabelColor:(NSColor *)labelColor
+- (void)setLabelColor:(NSColor *)labelColor
 {
     _labelColor = labelColor;
     [self prepLabelAttributes];
@@ -276,7 +274,7 @@ static inline NSPoint NSSubtractPoints(NSPoint firstPoint, NSPoint secondPoint)
 
 #pragma mark drawing
 
--(void)drawRect:(NSRect)dirtyRect
+- (void)drawRect:(NSRect)dirtyRect
 {
     NSRect bounds = [self bounds];
     
@@ -333,14 +331,14 @@ static inline NSPoint NSSubtractPoints(NSPoint firstPoint, NSPoint secondPoint)
 
 // Use flipped coordinates for now.
 // Eventually could make this independent
--(BOOL)isFlipped
+- (BOOL)isFlipped
 {
     return TRUE;
 }
 
 
 #pragma mark Event handlers
--(void)mouseUp:(NSEvent *)theEvent
+- (void)mouseUp:(NSEvent *)theEvent
 {
     NSInteger row, column;
     NSPoint p = [theEvent locationInWindow];							
@@ -355,7 +353,6 @@ static inline NSPoint NSSubtractPoints(NSPoint firstPoint, NSPoint secondPoint)
         }
     } else {
         if (_delegateFlags.clickedAtRowCol) {
-            NSLog(@"Clicked at row:%ld, col:%ld", row, column);
             [_delegate hexGridView:self cellClickedAtRow:row column:column];
         }
     }
