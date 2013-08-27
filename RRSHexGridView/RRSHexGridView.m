@@ -1,10 +1,9 @@
-//
-//  RRSHexGridView.m
-//  HexGrid
-//
-//  Created by Russell Steffen on 6/1/13.
-//  Copyright (c) 2013 Russell Steffen. All rights reserved.
-//
+///
+/// @file RRSHexGridView.m
+/// @author Russell Steffen
+/// @date 12 July 2013
+/// @copyright Copyright (c) 2013 Russell Steffen. All rights reserved.
+///
 
 #import "RRSHexGridView.h"
 
@@ -197,8 +196,8 @@ static inline NSPoint NSSubtractPoints(NSPoint firstPoint, NSPoint secondPoint)
 
 - (void)prepLabelAttributes
 {
-    cellLabelAttrs = [@{ NSFontAttributeName : [NSFont userFontOfSize:8],
-                      NSForegroundColorAttributeName : _labelColor } mutableCopy];
+    cellLabelAttrs = @{ NSFontAttributeName : [NSFont userFontOfSize:8],
+                      NSForegroundColorAttributeName : _labelColor };
 }
 
 #pragma mark Accessors
@@ -281,14 +280,13 @@ static inline NSPoint NSSubtractPoints(NSPoint firstPoint, NSPoint secondPoint)
     //NSLog(@"drawRect : bounds (%f,%f), (%f,%f)", bounds.origin.x,
     //      bounds.origin.y, bounds.size.height, bounds.size.width);
 
-    [_viewBgColor set];
+    [self.viewBgColor set];
 
     NSBezierPath *bound_path = [NSBezierPath bezierPathWithRect:bounds];
     [bound_path fill];
 
-    [_cellBorderColor setStroke];
-    [_cellFillColor setFill];
-
+    [self.cellBorderColor setStroke];
+    [self.cellFillColor setFill];
 
     for( NSInteger i = 0; i < self.rows; i++ ) {
         for( NSInteger j = 0; j < self.columns; j++) {
@@ -302,11 +300,13 @@ static inline NSPoint NSSubtractPoints(NSPoint firstPoint, NSPoint secondPoint)
 
             if( _delegateFlags.drawCellContentsAtRow ) {
                 [NSGraphicsContext saveGraphicsState];
+
                 continueDrawing = [_delegate hexGridView:self
                                    drawCellContentsAtRow:i
                                                   column:j
                                                   center:p
                                                     path:path];
+
                 [NSGraphicsContext restoreGraphicsState];
             }
 

@@ -15,8 +15,8 @@
 {
     // Insert code here to initialize your application
 
-    self.hexGridView.rows = 15;
-    self.hexGridView.columns = 15;
+    self.hexGridView.rows = 2;
+    self.hexGridView.columns = 3;
 
     self.hexGridView.labelColor = [NSColor blackColor];
 

@@ -1,10 +1,9 @@
-//
-//  RRSHexGridView.h
-//  HexGrid
-//
-//  Created by Russell Steffen on 6/1/13.
-//  Copyright (c) 2013 Russell Steffen. All rights reserved.
-//
+///
+/// @file RRSHexGridView.h
+/// @author Russell Steffen
+/// @date 12 July 2013
+/// @copyright Copyright (c) 2013 Russell Steffen. All rights reserved.
+///
 
 #import <Cocoa/Cocoa.h>
 
@@ -23,6 +22,10 @@
 /*! Orientation of the Hex Grid */
 @property (readonly) BOOL isVertical;
 
+/*! @name Hexagon Attributes
+ *  @image html "Hex Diagram 1.png" "Hex Geometry Diagram"
+ */
+//!@{
 /*! Cell radius */
 @property (readonly) float R;
 /*! Cell height */
@@ -31,19 +34,20 @@
 @property (readonly) float W;
 /*! Cell size */
 @property (readonly) float S;
+//!@}
 
 /*! Horizontal offset between cell centers */
 @property (readonly) float horizontalIncrement;
 /*! Vertical offset between cell centers */
 @property (readonly) float verticalIncrement;
 
-/*! @methodgroup Init */
+/*! @defgroup Init */
 /*!
  * Initalize with given cell size and orientation
  */
 - (id)initWithRadius:(float)radius isVertical:(BOOL)vert;
 
-/*! @methodgroup Cell Geometry */
+/*! @defgroup Cell Geometry */
 /*!
  * return the center point of a given cell
  * @return cell center point
@@ -123,12 +127,12 @@ drawCellContentsAtRow:(NSInteger)row
  * A grid of hexagons
  */
 @interface RRSHexGridView : NSView {
-    RRSHexGeometry *geometry;
-    NSMutableDictionary *cellLabelAttrs;
+    RRSHexGeometry *geometry; ///< Reference tothe current geometery object
+    NSDictionary *cellLabelAttrs; ///< Dictionary of label text attributes
 
-    // Delegate
-    __weak id<RRSHexViewDelegate> _delegate;
+    __weak id<RRSHexViewDelegate> _delegate; ///< Reference to the delegate object
 
+    /// Keep track of which methods are impelented by the delegate
     struct {
         unsigned int drawCellContentsAtRow:1;
         unsigned int clickedBorder:1;
@@ -136,14 +140,14 @@ drawCellContentsAtRow:(NSInteger)row
     } _delegateFlags;
 
 
-    float _gridSize;
-    BOOL _isVertical;
-    NSColor *_labelColor;
+    float _gridSize; ///< Grid size
+    BOOL _isVertical; ///< Oriantation flag
+    NSColor *_labelColor; ///< label color
     
 }
 
 /*! size of the grid */
-@property (assign) float gridSize;
+@property (readwrite) float gridSize;
 /*! number of rows in the grid */
 @property (assign) NSInteger rows;
 /*! number of colums in the grid */
